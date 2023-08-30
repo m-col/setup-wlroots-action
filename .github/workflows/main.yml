@@ -10,7 +10,7 @@ jobs:
         with:
           wayland-version: "1.22.0"
           wayland-protocols-version: "1.31"
-          libdrm-version: "2.4.114"
+          libdrm-version: "libdrm-2.4.114"
           seatd-version: "0.6.4"
           pixman-version: "0.42.0"
           hwdata-version: "v0.364"

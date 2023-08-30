@@ -2,7 +2,7 @@ on: [push]
 
 jobs:
   release-versions:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     name: Set up release versions of libraries
     steps:
       - uses: actions/checkout@v3

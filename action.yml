@@ -84,7 +84,7 @@ runs:
         tar -xf drm.tar.gz
         tar -xf seatd.tar.gz
         tar -xf pixman.tar.gz
-        unzip hwdata.tar.gz
+        unzip hwdata.zip
         tar -xf wlroots.tar.gz
     - name: Build wayland
       working-directory: wayland-${{ inputs.wayland-version }}

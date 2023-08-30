@@ -19,6 +19,7 @@ sudo apt-get install -y --no-install-recommends \
     libxcb-res0-dev \
     libxcb-xfixes0-dev \
     libxcb-xinput-dev \
+    libxcb-ewmh2 \
     libxcb1-dev \
     libxkbcommon-dev \
     ninja-build \

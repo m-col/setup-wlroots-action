@@ -6,8 +6,8 @@ jobs:
     name: Run the action
     steps:
       - uses: actions/checkout@v3
-      - uses: m-col/setup-wlroots-action@v1.5
+      - uses: m-col/setup-wlroots-action@main
         with:
           wayland-version: "1.22.0"
       - run: echo "Done"
-        shell: bash
+        shell: ls -l /usr

@@ -92,7 +92,6 @@ runs:
       run: |
         meson build --prefix=/usr -Ddocumentation=false
         ninja -C build
-        DESTDIR=~/wayland ninja -C build install
         sudo ninja -C build install
     - name: Build wayland-protocols
       working-directory: wayland-protocols-${{ inputs.wayland-protocols-version }}
@@ -100,7 +99,6 @@ runs:
       run: |
         meson build --prefix=/usr -Dtests=false
         ninja -C build
-        DESTDIR=~/wayland ninja -C build install
         sudo ninja -C build install
     - name: Build libdrm
       working-directory: drm-${{ env.LIBDRM_PATH }}
@@ -108,7 +106,6 @@ runs:
       run: |
         meson build --prefix=/usr
         ninja -C build
-        DESTDIR=~/wayland ninja -C build install
         sudo ninja -C build install
     - name: Build seatd
       working-directory: seatd-${{ inputs.seatd-version }}
@@ -116,7 +113,6 @@ runs:
       run: |
         meson build --prefix=/usr
         ninja -C build
-        DESTDIR=~/wayland ninja -C build install
         sudo ninja -C build install
     - name: Build pixman
       working-directory: pixman-${{ env.PIXMAN_PATH }}
@@ -124,7 +120,6 @@ runs:
       run: |
         meson build --prefix=/usr
         ninja -C build
-        DESTDIR=~/wayland ninja -C build install
         sudo ninja -C build install
     - name: Build hwdata
       working-directory: hwdata-${{ inputs.hwdata-version }}
@@ -139,4 +134,4 @@ runs:
       run: |
         meson build --prefix=/usr -Dxwayland=enabled -Dexamples=false
         ninja -C build
-        DESTDIR=~/wayland ninja -C build install
+        sudo ninja -C build install

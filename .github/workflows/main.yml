@@ -12,7 +12,7 @@ jobs:
           wayland-protocols-version: "1.31"
           libdrm-version: "libdrm-2.4.114"
           seatd-version: "0.6.4"
-          pixman-version: "0.42.0"
+          pixman-version: "pixman-0.42.0"
           hwdata-version: "v0.364"
           wlroots-version: "0.16.2"
       - run: echo "Done"

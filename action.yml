@@ -97,7 +97,7 @@ runs:
         DESTDIR=~/wayland ninja -C build install
         sudo ninja -C build install
     - name: Build pixman
-      working-directory: pixman-pixman-${{ inputs.pixman-version }}
+      working-directory: pixman-${{ inputs.pixman-version }}
       shell: bash
       run: |
         meson build --prefix=/usr

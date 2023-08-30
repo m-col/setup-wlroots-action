@@ -130,6 +130,7 @@ runs:
         sudo make install
     - name: Build wlroots
       working-directory: wlroots-${{ inputs.wlroots-version }}
+      continue-on-error: ${{ inputs.wlroots-version == 'master' }}
       shell: bash
       run: |
         meson build --prefix=/usr -Dxwayland=enabled -Dexamples=false

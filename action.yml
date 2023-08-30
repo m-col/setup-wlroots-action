@@ -56,9 +56,9 @@ runs:
           echo PIXMAN_PATH=pixman-${{ inputs.pixman-version }} >> $GITHUB_ENV
         fi
         if [[ "${{ inputs.hwdata-version }}" == "master" ]]; then
-          echo HWDATA_PATH=tags/v${{ inputs.hwdata-version }} >> $GITHUB_ENV
-        else
           echo HWDATA_PATH=heads/${{ inputs.hwdata-version }} >> $GITHUB_ENV
+        else
+          echo HWDATA_PATH=tags/v${{ inputs.hwdata-version }} >> $GITHUB_ENV
         fi
         echo WLROOTS_PATH=${{ inputs.wlroots-version }} >> $GITHUB_ENV
     - name: Download and unpack source archives
@@ -69,7 +69,7 @@ runs:
         LIBDRM_URL: https://gitlab.freedesktop.org/mesa/drm/-/archive/${{ env.LIBDRM_PATH }}/drm-${{ env.LIBDRM_PATH }}.tar.gz
         SEATD_URL: https://git.sr.ht/~kennylevinsen/seatd/archive/${{ env.SEATD_PATH }}.tar.gz
         PIXMAN_URL: https://gitlab.freedesktop.org/pixman/pixman/-/archive/${{ env.PIXMAN_PATH }}/pixman-${{ env.PIXMAN_PATH }}.tar.gz
-        HWDATA_URL: https://github.com/vcrhonek/hwdata/archive/${{ env.HWDATA_PATH }}.zip
+        HWDATA_URL: https://github.com/vcrhonek/hwdata/archive/refs/${{ env.HWDATA_PATH }}.zip
         WLROOTS_URL: https://gitlab.freedesktop.org/wlroots/wlroots/-/archive/${{ env.WLROOTS_PATH }}/wlroots-${{ env.WLROOTS_PATH }}.tar.gz
       run: |
         wget -O wayland.tar.gz $WAYLAND_URL

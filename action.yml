@@ -7,9 +7,87 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: echo Hello ${{ inputs.wayland-version }}
-      shell: bash
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
-    - run: setup-ubuntu.sh
+    - name: Install packaged Ubuntu dependencies
+      run: setup-ubuntu.sh
       shell: bash
+    - name: Set environmental variables
+      run: |
+        echo "CPATH=${HOME}/wayland/usr/include" >> $GITHUB_ENV
+        echo "LD_LIBRARY_PATH=${HOME}/wayland/usr/lib" >> $GITHUB_ENV
+        echo "LIBRARY_PATH=${HOME}/wayland/usr/lib" >> $GITHUB_ENV
+        echo "PKG_CONFIG_PATH=${HOME}/wayland/usr/share/pkgconfig:${HOME}/wayland/usr/lib/pkgconfig" >> $GITHUB_ENV
+      shell: bash
+    - name: Download and unpack source archives
+      shell: bash
+      env:
+        WAYLAND_URL: https://gitlab.freedesktop.org/wayland/wayland/-/releases/${{ env.wayland-version }}/downloads/wayland-${{ env.wayland-version }}.tar.xz
+        WAYLAND_PROTOCOLS_URL: https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/${{ env.wayland-protocols-version }}/downloads/wayland-protocols-${{ env.wayland-protocols-version }}.tar.xz
+        LIBDRM_URL: https://gitlab.freedesktop.org/mesa/drm/-/archive/libdrm-${{ env.libdrm-version }}/drm-libdrm-${{ env.libdrm-version }}.tar.gz
+        SEATD_URL: https://git.sr.ht/~kennylevinsen/seatd/archive/${{ env.seatd-version }}.tar.gz
+        PIXMAN_URL: https://gitlab.freedesktop.org/pixman/pixman/-/archive/pixman-${{ env.pixman-version }}/pixman-pixman-${{ env.pixman-version }}.tar.bz2
+        HWDATA_URL: https://github.com/vcrhonek/hwdata/archive/refs/tags/v${{ env.hwdata-version }}.tar.gz
+        WLROOTS_URL: https://gitlab.freedesktop.org/wlroots/wlroots/-/archive/${{ matrix.wlroots-version }}/wlroots-${{ matrix.wlroots-version }}.tar.gz
+      run: |
+        wget $WAYLAND_URL
+        wget $WAYLAND_PROTOCOLS_URL
+        wget $LIBDRM_URL
+        wget -O seatd.tar.gz $SEATD_URL
+        wget $PIXMAN_URL
+        wget -O hwdata.tar.gz $HWDATA_URL
+        wget -O wlroots.tar.gz $WLROOTS_URL
+        tar -xJf wayland-${{ env.wayland-version }}.tar.xz
+        tar -xJf wayland-protocols-${{ env.wayland-protocols-version }}.tar.xz
+        tar -xzf drm-libdrm-${{ env.libdrm-version }}.tar.gz
+        tar -xzf seatd.tar.gz
+        tar -xjf pixman-pixman-${{ env.pixman-version }}.tar.bz2
+        tar -xzf hwdata.tar.gz
+        tar -xzf wlroots.tar.gz
+      - name: Build wayland
+        working-directory: wayland-${{ env.wayland-version }}
+        run: |
+          meson build --prefix=/usr -Ddocumentation=false
+          ninja -C build
+          DESTDIR=~/wayland ninja -C build install
+          sudo ninja -C build install
+      - name: Build wayland-protocols
+        working-directory: wayland-protocols-${{ env.wayland-protocols-version }}
+        run: |
+          meson build --prefix=/usr
+          ninja -C build
+          DESTDIR=~/wayland ninja -C build install
+          sudo ninja -C build install
+      - name: Build libdrm
+        working-directory: drm-libdrm-${{ env.libdrm-version }}
+        run: |
+          meson build --prefix=/usr
+          ninja -C build
+          DESTDIR=~/wayland ninja -C build install
+          sudo ninja -C build install
+      - name: Build seatd
+        working-directory: seatd-${{ env.seatd-version }}
+        run: |
+          meson build --prefix=/usr
+          ninja -C build
+          DESTDIR=~/wayland ninja -C build install
+          sudo ninja -C build install
+      - name: Build pixman
+        working-directory: pixman-pixman-${{ env.pixman-version }}
+        run: |
+          meson build --prefix=/usr
+          ninja -C build
+          DESTDIR=~/wayland ninja -C build install
+          sudo ninja -C build install
+      - name: Build hwdata
+        working-directory: hwdata-${{ env.hwdata-version }}
+        run: |
+          ./configure --prefix=/usr --libdir=/lib --datadir=/usr/share
+          make
+          sudo make install
+      - name: Build wlroots
+        working-directory: wlroots-${{ env.wlroots-version }}
+        run: |
+          meson build --prefix=/usr -Dxwayland=enabled
+          ninja -C build
+          DESTDIR=~/wayland ninja -C build install

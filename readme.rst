@@ -15,7 +15,7 @@ Example
 
 .. code-block :: yaml
 
-   - uses: m-col/setup-wlroots-action@main
+   - uses: m-col/setup-wlroots-action@v0.1
      with:
        wayland-version: "1.22.0"
        wayland-protocols-version: "1.31"

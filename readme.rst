@@ -25,11 +25,5 @@ Example
        hwdata-version: "0.364"
        wlroots-version: "0.16.2"
 
-Supported runners
------------------
-
-- ubuntu-22.04
-
-  - If using an Ubuntu runner, the packaged version of XWayland may be too old
-    for building the master version of wlroots. In this case, you should pin
-    the wlroots version.
+Note, the Ubuntu packaged version of XWayland may be too old for building the
+master version of wlroots. In this case, you should pin the wlroots version.

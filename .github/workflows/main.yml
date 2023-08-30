@@ -6,7 +6,7 @@ jobs:
     name: Run the action
     steps:
       - uses: actions/checkout@v3
-      - uses: m-col/setup-wlroots-action@v1.1
+      - uses: m-col/setup-wlroots-action@v1.2
         with:
           wayland-version: "1.22.0"
       - run: echo "Done"

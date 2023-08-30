@@ -137,6 +137,6 @@ runs:
       working-directory: wlroots-${{ inputs.wlroots-version }}
       shell: bash
       run: |
-        meson build --prefix=/usr -Dxwayland=enabled
+        meson build --prefix=/usr -Dxwayland=enabled -Dexamples=false
         ninja -C build
         DESTDIR=~/wayland ninja -C build install

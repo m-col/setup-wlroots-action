@@ -1,9 +1,36 @@
 name: "Set up wayland and wlroots libraries"
 description: "Sets up the wayland and wlroots libraries for github workflows"
+
 inputs:
   wayland-version:
     description: "Wayland library version to set up"
-    required: true
+    required: false
+    default: "main"
+  wayland-protocols-version:
+    description: "Wayland protocols version to set up"
+    required: false
+    default: "main"
+  libdrm-version:
+    description: "libdrm version to set up"
+    required: false
+    default: "main"
+  seatd-version:
+    description: "seatd version to set up"
+    required: false
+    default: "master"
+  pixman-version:
+    description: "pixman version to set up"
+    required: false
+    default: "master"
+  hwdata-version:
+    description: "hwdata version to set up"
+    required: false
+    default: "master"
+  wlroots-version:
+    description: "wlroots version to set up"
+    required: false
+    default: "master"
+
 runs:
   using: "composite"
   steps:
@@ -12,40 +39,33 @@ runs:
     - name: Install packaged Ubuntu dependencies
       run: setup-ubuntu.sh
       shell: bash
-    - name: Set environmental variables
-      run: |
-        echo "CPATH=${HOME}/wayland/usr/include" >> $GITHUB_ENV
-        echo "LD_LIBRARY_PATH=${HOME}/wayland/usr/lib" >> $GITHUB_ENV
-        echo "LIBRARY_PATH=${HOME}/wayland/usr/lib" >> $GITHUB_ENV
-        echo "PKG_CONFIG_PATH=${HOME}/wayland/usr/share/pkgconfig:${HOME}/wayland/usr/lib/pkgconfig" >> $GITHUB_ENV
-      shell: bash
     - name: Download and unpack source archives
       shell: bash
       env:
-        WAYLAND_URL: https://gitlab.freedesktop.org/wayland/wayland/-/releases/${{ env.wayland-version }}/downloads/wayland-${{ env.wayland-version }}.tar.xz
-        WAYLAND_PROTOCOLS_URL: https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/${{ env.wayland-protocols-version }}/downloads/wayland-protocols-${{ env.wayland-protocols-version }}.tar.xz
-        LIBDRM_URL: https://gitlab.freedesktop.org/mesa/drm/-/archive/libdrm-${{ env.libdrm-version }}/drm-libdrm-${{ env.libdrm-version }}.tar.gz
-        SEATD_URL: https://git.sr.ht/~kennylevinsen/seatd/archive/${{ env.seatd-version }}.tar.gz
-        PIXMAN_URL: https://gitlab.freedesktop.org/pixman/pixman/-/archive/pixman-${{ env.pixman-version }}/pixman-pixman-${{ env.pixman-version }}.tar.bz2
-        HWDATA_URL: https://github.com/vcrhonek/hwdata/archive/refs/tags/v${{ env.hwdata-version }}.tar.gz
-        WLROOTS_URL: https://gitlab.freedesktop.org/wlroots/wlroots/-/archive/${{ matrix.wlroots-version }}/wlroots-${{ matrix.wlroots-version }}.tar.gz
+        WAYLAND_URL: https://gitlab.freedesktop.org/wayland/wayland/-/archive/${{ inputs.wayland-version }}/wayland-${{ inputs.wayland-version }}.tar.gz
+        WAYLAND_PROTOCOLS_URL: https://gitlab.freedesktop.org/wayland/wayland-protocols/-/archive/${{ inputs.wayland-protocols-version }}/wayland-protocols-${{ inputs.wayland-protocols-version }}.tar.gz
+        LIBDRM_URL: https://gitlab.freedesktop.org/mesa/drm/-/archive/${{ inputs.libdrm-version }}/drm-${{ inputs.libdrm-version }}.tar.gz
+        SEATD_URL: https://git.sr.ht/~kennylevinsen/seatd/archive/${{ inputs.seatd-version }}.tar.gz
+        PIXMAN_URL: https://gitlab.freedesktop.org/pixman/pixman/-/archive/${{ inputs.pixman-version }}/pixman-${{ inputs.pixman-version }}.tar.gz
+        HWDATA_URL: https://github.com/vcrhonek/hwdata/archive/refs/heads/${{ inputs.hwdata-version }}.tar.gz
+        WLROOTS_URL: https://gitlab.freedesktop.org/wlroots/wlroots/-/archive/${{ inputs.wlroots-version }}/wlroots-${{ inputs.wlroots-version }}.tar.gz
       run: |
-        wget $WAYLAND_URL
-        wget $WAYLAND_PROTOCOLS_URL
-        wget $LIBDRM_URL
+        wget -O wayland.tar.gz $WAYLAND_URL
+        wget -O wayland-protocols.tar.gz $WAYLAND_PROTOCOLS_URL
+        wget -O drm.tar.gz $LIBDRM_URL
         wget -O seatd.tar.gz $SEATD_URL
-        wget $PIXMAN_URL
+        wget -O pixman.tar.gz $PIXMAN_URL
         wget -O hwdata.tar.gz $HWDATA_URL
         wget -O wlroots.tar.gz $WLROOTS_URL
-        tar -xJf wayland-${{ env.wayland-version }}.tar.xz
-        tar -xJf wayland-protocols-${{ env.wayland-protocols-version }}.tar.xz
-        tar -xzf drm-libdrm-${{ env.libdrm-version }}.tar.gz
-        tar -xzf seatd.tar.gz
-        tar -xjf pixman-pixman-${{ env.pixman-version }}.tar.bz2
-        tar -xzf hwdata.tar.gz
-        tar -xzf wlroots.tar.gz
+        tar -xf wayland.tar.gz
+        tar -xf wayland-protocols.tar.gz
+        tar -xf drm.tar.gz
+        tar -xf seatd.tar.gz
+        tar -xf pixman.tar.gz
+        tar -xf hwdata.tar.gz
+        tar -xf wlroots.tar.gz
     - name: Build wayland
-      working-directory: wayland-${{ env.wayland-version }}
+      working-directory: wayland-${{ inputs.wayland-version }}
       shell: bash
       run: |
         meson build --prefix=/usr -Ddocumentation=false
@@ -53,7 +73,7 @@ runs:
         DESTDIR=~/wayland ninja -C build install
         sudo ninja -C build install
     - name: Build wayland-protocols
-      working-directory: wayland-protocols-${{ env.wayland-protocols-version }}
+      working-directory: wayland-protocols-${{ inputs.wayland-protocols-version }}
       shell: bash
       run: |
         meson build --prefix=/usr
@@ -61,7 +81,7 @@ runs:
         DESTDIR=~/wayland ninja -C build install
         sudo ninja -C build install
     - name: Build libdrm
-      working-directory: drm-libdrm-${{ env.libdrm-version }}
+      working-directory: drm-libdrm-${{ inputs.libdrm-version }}
       shell: bash
       run: |
         meson build --prefix=/usr
@@ -69,7 +89,7 @@ runs:
         DESTDIR=~/wayland ninja -C build install
         sudo ninja -C build install
     - name: Build seatd
-      working-directory: seatd-${{ env.seatd-version }}
+      working-directory: seatd-${{ inputs.seatd-version }}
       shell: bash
       run: |
         meson build --prefix=/usr
@@ -77,7 +97,7 @@ runs:
         DESTDIR=~/wayland ninja -C build install
         sudo ninja -C build install
     - name: Build pixman
-      working-directory: pixman-pixman-${{ env.pixman-version }}
+      working-directory: pixman-pixman-${{ inputs.pixman-version }}
       shell: bash
       run: |
         meson build --prefix=/usr
@@ -85,14 +105,14 @@ runs:
         DESTDIR=~/wayland ninja -C build install
         sudo ninja -C build install
     - name: Build hwdata
-      working-directory: hwdata-${{ env.hwdata-version }}
+      working-directory: hwdata-${{ inputs.hwdata-version }}
       shell: bash
       run: |
         ./configure --prefix=/usr --libdir=/lib --datadir=/usr/share
         make
         sudo make install
     - name: Build wlroots
-      working-directory: wlroots-${{ env.wlroots-version }}
+      working-directory: wlroots-${{ inputs.wlroots-version }}
       shell: bash
       run: |
         meson build --prefix=/usr -Dxwayland=enabled

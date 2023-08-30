@@ -15,6 +15,7 @@ sudo apt-get install -y --no-install-recommends \
     libxcb-image0-dev \
     libxcb-present-dev \
     libxcb-render0-dev \
+    libxcb-render-util0 \
     libxcb-res0-dev \
     libxcb-xfixes0-dev \
     libxcb-xinput-dev \

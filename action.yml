@@ -128,15 +128,6 @@ runs:
         ./configure --prefix=/usr --libdir=/lib --datadir=/usr/share
         make
         sudo make install
-    - name: Build XWayland (currently needed for wlroots git version)
-      shell: bash
-      run: |
-        wget -O xwayland.tar.gz https://gitlab.freedesktop.org/xorg/xserver/-/archive/xwayland-23.2/xserver-xwayland-23.2.tar.gz
-        tar -xf xwayland.tar.gz
-        cd xserver-xwayland-23.2
-        meson build --prefix=/usr
-        ninja -C build
-        sudo ninja -C build install
     - name: Build wlroots
       working-directory: wlroots-${{ inputs.wlroots-version }}
       shell: bash

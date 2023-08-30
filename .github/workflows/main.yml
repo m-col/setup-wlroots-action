@@ -10,3 +10,4 @@ jobs:
         with:
           wayland-version: "1.22.0"
       - run: echo "Done"
+        shell: bash

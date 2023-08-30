@@ -11,17 +11,17 @@ sudo apt-get install -y --no-install-recommends \
     libpciaccess-dev \
     libxcb-composite0-dev \
     libxcb-dri3-dev \
+    libxcb-ewmh2 \
     libxcb-icccm4-dev \
     libxcb-image0-dev \
     libxcb-present-dev \
-    libxcb-render0-dev \
     libxcb-render-util0 \
+    libxcb-render0-dev \
     libxcb-res0-dev \
     libxcb-xfixes0-dev \
     libxcb-xinput-dev \
-    libxcb-ewmh2 \
     libxcb1-dev \
     libxkbcommon-dev \
-    xorgproto \
     ninja-build
+    xorgproto \
 sudo pip install meson

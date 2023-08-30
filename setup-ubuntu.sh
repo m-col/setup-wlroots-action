@@ -2,6 +2,8 @@
 #
 # Set up packaged dependencies on Ubuntu
 
+set -e
+
 sudo apt update
 sudo apt-get install -y --no-install-recommends \
     libegl1-mesa-dev \

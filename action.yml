@@ -81,7 +81,7 @@ runs:
         DESTDIR=~/wayland ninja -C build install
         sudo ninja -C build install
     - name: Build libdrm
-      working-directory: drm-libdrm-${{ inputs.libdrm-version }}
+      working-directory: drm-${{ inputs.libdrm-version }}
       shell: bash
       run: |
         meson build --prefix=/usr

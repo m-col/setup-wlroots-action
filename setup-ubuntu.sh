@@ -25,5 +25,5 @@ sudo apt-get install -y --no-install-recommends \
     libxcb1-dev \
     libxkbcommon-dev \
     ninja-build \
-    xorgproto
+    x11proto-dev
 sudo pip install meson

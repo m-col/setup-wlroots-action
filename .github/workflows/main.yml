@@ -1,14 +1,12 @@
 on: [push]
 
 jobs:
-  hello_world_job:
+  dogfood:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: Run the action
     steps:
       - uses: actions/checkout@v3
-      - id: foo
-        uses: m-col/setup-wlroots-action@v1
+      - uses: m-col/setup-wlroots-action@v1
         with:
-          who-to-greet: 'Mona the Octocat'
-      - run: echo random-number ${{ steps.foo.outputs.random-number }}
-        shell: bash
+          wayland-version: "1.22.0"
+      - run: echo "Done"

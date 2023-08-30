@@ -1,24 +1,12 @@
-name: 'Hello World'
-description: 'Greet someone'
+name: "Set up wayland and wlroots libraries"
+description: "Sets up the wayland and wlroots libraries for github workflows"
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  wayland-version:
+    description: "Wayland library version to set up"
     required: true
-    default: 'World'
-outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-number }}
 runs:
   using: "composite"
   steps:
-    - run: echo Hello ${{ inputs.who-to-greet }}.
-      shell: bash
-    - id: random-number-generator
-      run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
-      shell: bash
+    - run: echo Hello ${{ inputs.wayland-version }}
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
-      shell: bash
-    - run: goodbye.sh
-      shell: bash
-
+    - run: sudo setup-ubuntu.sh

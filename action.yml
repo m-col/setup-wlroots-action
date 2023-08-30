@@ -98,7 +98,7 @@ runs:
       working-directory: wayland-protocols-${{ inputs.wayland-protocols-version }}
       shell: bash
       run: |
-        meson build --prefix=/usr
+        meson build --prefix=/usr -Dtests=false
         ninja -C build
         DESTDIR=~/wayland ninja -C build install
         sudo ninja -C build install

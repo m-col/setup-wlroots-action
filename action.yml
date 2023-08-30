@@ -69,7 +69,7 @@ runs:
         LIBDRM_URL: https://gitlab.freedesktop.org/mesa/drm/-/archive/${{ env.LIBDRM_PATH }}/drm-${{ env.LIBDRM_PATH }}.tar.gz
         SEATD_URL: https://git.sr.ht/~kennylevinsen/seatd/archive/${{ env.SEATD_PATH }}.tar.gz
         PIXMAN_URL: https://gitlab.freedesktop.org/pixman/pixman/-/archive/${{ env.PIXMAN_PATH }}/pixman-${{ env.PIXMAN_PATH }}.tar.gz
-        HWDATA_URL: https://github.com/vcrhonek/hwdata/archive/${{ env.PIXMAN_PATH }}.zip
+        HWDATA_URL: https://github.com/vcrhonek/hwdata/archive/${{ env.HWDATA_PATH }}.zip
         WLROOTS_URL: https://gitlab.freedesktop.org/wlroots/wlroots/-/archive/${{ env.WLROOTS_PATH }}/wlroots-${{ env.WLROOTS_PATH }}.tar.gz
       run: |
         wget -O wayland.tar.gz $WAYLAND_URL
@@ -77,14 +77,14 @@ runs:
         wget -O drm.tar.gz $LIBDRM_URL
         wget -O seatd.tar.gz $SEATD_URL
         wget -O pixman.tar.gz $PIXMAN_URL
-        wget -O hwdata.tar.gz $HWDATA_URL
+        wget -O hwdata.zip $HWDATA_URL
         wget -O wlroots.tar.gz $WLROOTS_URL
         tar -xf wayland.tar.gz
         tar -xf wayland-protocols.tar.gz
         tar -xf drm.tar.gz
         tar -xf seatd.tar.gz
         tar -xf pixman.tar.gz
-        tar -xf hwdata.tar.gz
+        unzip hwdata.tar.gz
         tar -xf wlroots.tar.gz
     - name: Build wayland
       working-directory: wayland-${{ inputs.wayland-version }}

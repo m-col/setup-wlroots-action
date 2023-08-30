@@ -2,8 +2,8 @@
 #
 # Set up packaged dependencies on Ubuntu
 
-apt update
-apt-get install -y --no-install-recommends \
+sudo apt update
+sudo apt-get install -y --no-install-recommends \
     libegl1-mesa-dev \
     libgbm-dev \
     libgles2-mesa-dev \
@@ -22,4 +22,4 @@ apt-get install -y --no-install-recommends \
     libxkbcommon-dev \
     ninja-build \
     xwayland
-pip install meson
+sudo pip install meson

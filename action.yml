@@ -46,6 +46,7 @@ runs:
         tar -xzf wlroots.tar.gz
     - name: Build wayland
       working-directory: wayland-${{ env.wayland-version }}
+      shell: bash
       run: |
         meson build --prefix=/usr -Ddocumentation=false
         ninja -C build
@@ -53,6 +54,7 @@ runs:
         sudo ninja -C build install
     - name: Build wayland-protocols
       working-directory: wayland-protocols-${{ env.wayland-protocols-version }}
+      shell: bash
       run: |
         meson build --prefix=/usr
         ninja -C build
@@ -60,6 +62,7 @@ runs:
         sudo ninja -C build install
     - name: Build libdrm
       working-directory: drm-libdrm-${{ env.libdrm-version }}
+      shell: bash
       run: |
         meson build --prefix=/usr
         ninja -C build
@@ -67,6 +70,7 @@ runs:
         sudo ninja -C build install
     - name: Build seatd
       working-directory: seatd-${{ env.seatd-version }}
+      shell: bash
       run: |
         meson build --prefix=/usr
         ninja -C build
@@ -74,6 +78,7 @@ runs:
         sudo ninja -C build install
     - name: Build pixman
       working-directory: pixman-pixman-${{ env.pixman-version }}
+      shell: bash
       run: |
         meson build --prefix=/usr
         ninja -C build
@@ -81,12 +86,14 @@ runs:
         sudo ninja -C build install
     - name: Build hwdata
       working-directory: hwdata-${{ env.hwdata-version }}
+      shell: bash
       run: |
         ./configure --prefix=/usr --libdir=/lib --datadir=/usr/share
         make
         sudo make install
     - name: Build wlroots
       working-directory: wlroots-${{ env.wlroots-version }}
+      shell: bash
       run: |
         meson build --prefix=/usr -Dxwayland=enabled
         ninja -C build

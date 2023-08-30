@@ -22,6 +22,5 @@ sudo apt-get install -y --no-install-recommends \
     libxcb-ewmh2 \
     libxcb1-dev \
     libxkbcommon-dev \
-    ninja-build \
-    xwayland
+    ninja-build
 sudo pip install meson

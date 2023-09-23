@@ -4,8 +4,8 @@
 
 set -e
 
-sudo apt update
-sudo apt-get install -y --no-install-recommends \
+apt update
+apt-get install -y --no-install-recommends \
     libegl1-mesa-dev \
     libgbm-dev \
     libgles2-mesa-dev \
@@ -26,4 +26,4 @@ sudo apt-get install -y --no-install-recommends \
     libxkbcommon-dev \
     ninja-build \
     xwayland
-sudo pip install meson
+pip install meson

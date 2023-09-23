@@ -1,6 +1,8 @@
 setup-wlroots-action
 ====================
 
+WIP: This action is still under development.
+
 This action sets up a build environment with wlroots and its dependencies.
 
 Usage
